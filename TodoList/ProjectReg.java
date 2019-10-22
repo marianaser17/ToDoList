@@ -20,6 +20,7 @@ public class ProjectReg {
 	private ArrayList<Project> ProjectList;	
 	private String chosenProject;
 	
+	
 	public ProjectReg() {
 		ProjectList= new ArrayList<Project>();
 	}
@@ -86,9 +87,9 @@ public class ProjectReg {
 	public void showTasksFromProject() {
 		Scanner scan = new Scanner(System.in);
 		this.showProjects();
-		System.out.println("Please choose the project to view by typing its title: ");
 		
-		System.out.printf("> ");
+		System.out.println("Please enter a project ID ");
+		
 		chosenProject = scan.nextLine();
 
 		System.out.println("These are all the tasks in your chosen project: ");
@@ -102,7 +103,13 @@ public class ProjectReg {
 
 		Scanner scan = new Scanner (System.in);
 		
-		if (projectList.size()> 0) {
+		System.out.println("Please choose a project by ID:  ");
+		
+		ProjectList.size();
+		
+		chosenProject = scan.nextLine();
+		
+		findProject(chosenProject);
 			
 			String description;
 			String dueDate;
@@ -121,11 +128,7 @@ public class ProjectReg {
 			tempTaskList.add(task);
 			//task.toString();
 			projectList.get(0).setTaskList(tempTaskList);
-					
-		}
-		else {
-			System.out.println("Enter 6 to: Create new project");
-		}
+				
 		scan.close();
 		return projectList;
 	}
@@ -144,17 +147,9 @@ public class ProjectReg {
 		this.addProject(project);
 		
 		return this.getProjectList();
-		
-	
-		
-		
-		
-	
-		
 	}
 	
-		
-	
+
 		
 	public void writeToFile() {
 

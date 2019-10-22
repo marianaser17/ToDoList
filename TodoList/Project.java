@@ -8,16 +8,20 @@ public class Project {
 	private ArrayList<Task> taskList;
 	private Task task;
 	private String pName;
+	private String pID; //id
 	private LocalDate pCreatedAt;
 	
+	public Project () {
+		 taskList= new ArrayList<Task>() ;
+		
+	}
+	
 	public Project( String pName) {
-		this.pName= pName;
+		
+		this.pID = pID;
+		this.pName = pName;
 		this.pCreatedAt = LocalDate.now();
 	}	
-	
-	public Project() {	
-		taskList= new ArrayList<Task>() ;
-	}
 	
 	public ArrayList<Task> getTaskList(){
 		return this.taskList;
@@ -32,6 +36,12 @@ public class Project {
 	}
 	public void setTask(Task task) {
 		this.task= task;
+	}
+	public String getPID() {
+		return pID;
+	}
+	public void setPID(String PID) {
+		this.pID= PID;
 	}
 	
 	public String getPName() {

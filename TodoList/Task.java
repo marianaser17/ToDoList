@@ -8,6 +8,7 @@ public class Task implements Serializable {
 	private String description;
 	private boolean done;
 	private String dueDate;
+	private String taskID;
 	private Project taskList;
 	private Project project;
 	
@@ -53,6 +54,12 @@ public class Task implements Serializable {
 	}
 	public void setTasks(Project tasks) {
 		this.taskList= tasks;
+	}
+	public String getTaskID() {
+		return taskID;
+	}
+	public void setTaskID(String taskID) {
+		this.taskID=taskID;
 	}
 		
 	public Project getProject() {
