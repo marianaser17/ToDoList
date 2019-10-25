@@ -1,26 +1,27 @@
 package TodoList;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Project {
+
+public class Project implements Serializable, Comparable<Project> {
 	
-	
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Task> taskList;
-	private Task task;
-	private String pName;
-	private String pID; //id
+	private String projectName;
+	private int pID; //id
 	private LocalDate pCreatedAt;
+	private static int projectCounter=0;
 	
 	public Project () {
-		 taskList= new ArrayList<Task>() ;
-		
 	}
 	
-	public Project( String pName) {
-		
-		this.pID = pID;
-		this.pName = pName;
+	public Project(String projectName) {
+		this.projectName = projectName;
 		this.pCreatedAt = LocalDate.now();
+		projectCounter++;
+		pID= projectCounter;
+		taskList= new ArrayList<Task>() ;	
 	}	
 	
 	public ArrayList<Task> getTaskList(){
@@ -31,25 +32,20 @@ public class Project {
 		this.taskList = taskList;
 	}
 	
-	public Task getTask() {
-		return task;
-	}
-	public void setTask(Task task) {
-		this.task= task;
-	}
-	public String getPID() {
+	public int getPID() {
 		return pID;
 	}
-	public void setPID(String PID) {
-		this.pID= PID;
+	
+	public void setPID(int pID) {
+		this.pID= pID;
 	}
 	
-	public String getPName() {
-		return pName;
+	public String getProjectName() {
+		return projectName;
 		}
 	
-	public void setName(String pName) {
-		this.pName = pName;
+	public void setProjectName(String pName) {
+		this.projectName = pName;
 		}
 		
 	public LocalDate getPCreatedAt() {
@@ -59,66 +55,75 @@ public class Project {
 	public void setPCreatedAt(LocalDate pCreatedAt) {
 		this.pCreatedAt= pCreatedAt;
 		}
+	
+//	public Task getTask() {
+//		return task;
+//	}
+//	
+//	public void setTask(Task task) {
+//		this.task= task;
+//	}
+	
 	// methods: 
 	
+	//add a task
 	public void addTask(Task task) {
-		this.getTaskList().add(task);
-		
-		
-		
-		
-		System.out.println("The task" + task + "has been added");
-		
+		this.getTaskList().add(task);	
+		System.out.println("Task: " + task.getTaskName()+ " Due date: "+ task.getDueDate());
+		System.out.println("\n");
 	}
 	
-	// create a new Task: 
-	
-	
-	
-	public void removeTask(String taskName) {
-		Task task= this.findTask(taskName);
+	// remove a Task
+	public void removeTask(int taskID) {
+		Task task= this.findTask(taskID);
 		if (task != null) {
 			this.taskList.remove(task);
-			
-		System.out.println("The task" + taskName + "has been removed");
-			
 		}
-		
-		
 				}
 	
-	public Task findTask(String taskName) {
+	// find a Task 
+	public Task findTask(int taskID) {
 		for (Task task: this.taskList) {
-			if(task.getDescription().equals(taskName)) {
+			if(task.getTaskID()==taskID) {
 				return task;
 			}
-			
 		}
 	return null;		
 	}
 	
-	public void editTask  (String description, String newDescription, String newDueDate) {
-        Task tempTask;
-        tempTask = this.findTask(description);
-        tempTask.setDescription(newDescription);
-        tempTask.setDueDate(newDueDate);
-        
-        System.out.println("Your task has been edited");
+	//rename task 
+	public void renameTask  (int taskID, String newTaskName) {
+        Task tempTask= findTask(taskID);
+        if (tempTask != null) {
+        	tempTask.setTaskName(newTaskName);
+        }
 	}
+	
+	public void changeStatus(int taskID, boolean completed) {
+		 Task tempTask= findTask(taskID);
+	        if (tempTask != null) {
+	        	tempTask.setStatus(completed);
+	        }
+	}
+	
+	public void changeDueDate(int taskID, String newDueDate) {
+		 Task tempTask= findTask(taskID);
+	        if (tempTask != null) {
+	        	tempTask.setDueDate(newDueDate);
+	        }
+	}
+	
 	
 	public int compareTo(Project o) {
 		// TODO Auto-generated method stub
-		return this.getPName().compareTo(o.getPName());
+		return this.getProjectName().compareTo(o.getProjectName());
+		
 	}
-
 	
+	@Override
 	public String toString() {
-		return pName;
+		return "Project " + projectName + " date: "+ pCreatedAt;
 	}
-		
-		
-		
-		
 	}
 	
 	

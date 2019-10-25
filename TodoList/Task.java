@@ -5,76 +5,67 @@ public class Task implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private String description;
-	private boolean done;
+	private String taskName;
+	private boolean completed;
 	private String dueDate;
-	private String taskID;
-	private Project taskList;
+	private int taskID;
 	private Project project;
+	private static int taskCounter=0;
 	
 	public Task (String initialDescription, String initialDueDate) {
-		
-		this.description= initialDescription;
-		this.done= false;
+		taskCounter++;
+		taskID= taskCounter;
+		this.taskName= initialDescription;
+		this.completed= false;
 		this.dueDate=initialDueDate;
-		
 	}
 	
 	public Task() {
-		
 	}
 	
-	public String getDescription() {
-		return description;
+	public String getTaskName() {
+		return taskName;
 	}
 	
-	public void setDescription(String description) {
-		this.description= description;
-		
+	public void setTaskName(String description) {
+		this.taskName= description;	
 	}
 	
 	public boolean getDone() {
-		return done;
-	
+		return completed;
 	}
 	
 	public void setStatus (boolean done) {
-		this.done=done;
+		this.completed=done;
 	}
 	
 	public String getDueDate() {
 		return dueDate;
 	}
+	
 	public void setDueDate(String dueDate) {
 		this.dueDate= dueDate;
 	}
 	
-	public Project getTasks() {
-		return taskList;
-	}
-	public void setTasks(Project tasks) {
-		this.taskList= tasks;
-	}
-	public String getTaskID() {
+	public int getTaskID() {
 		return taskID;
 	}
-	public void setTaskID(String taskID) {
+	
+	public void setTaskID(int taskID) {
 		this.taskID=taskID;
 	}
 		
 	public Project getProject() {
 		return project;
 	}
+	
 	public void setProject(Project project) {
 		this.project=project;
 	}
-	//edit method for task ( change name and mark as complete)
 	
-	
+	@Override
 	public String toString() {
-		return "Task Description: " + description + " Status: " + done + " Due date: "+ dueDate;
+		return "Task: " + taskName + " Status: " + completed + " Due date: "+ dueDate;
 	}
-	
-	
 }
 	

@@ -1,210 +1,147 @@
 package TodoList;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+//import java.io.File;
+//import java.io.FileInputStream;
+//import java.io.FileNotFoundException;
+//import java.io.FileOutputStream;
+//import java.io.IOException;
+//import java.io.ObjectInputStream;
+//import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 	//import java.util.Collections;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 
 
 public class ProjectReg {
+	
+	private ArrayList<Project> projectList = new ArrayList<>();
 
-	
-	
-	private ArrayList<Project> ProjectList;	
-	private String chosenProject;
-	
-	
 	public ProjectReg() {
-		ProjectList= new ArrayList<Project>();
+		
 	}
+	// {
+//		projectList= new ArrayList<Project>();
+//	}
 
-	
 	public ArrayList<Project> getProjectList() {
-		return this.ProjectList;
+		System.out.println("I'm inside getProjectList");
+		return projectList;
 	}
 	
 	public void setProjects(ArrayList<Project> projectList) {
-		this.ProjectList=projectList;
+		this.projectList=projectList;
 	}
 		
- //add method
-	public void addProject(Project pName) {
-		this.getProjectList().add(pName);
-		
-		System.out.println("The Project " + pName + " has been created");
-		
+	//add method
+	public void addProject(Project p) {
+		getProjectList().add(p);
 	}
+	
+	//add newProject
+	public void addNewProject(String pName) {	
+		Project tempProject= new Project(pName);
+		addProject(tempProject);
+		showProjects();
+	}
+	
 	// remove method
-	public void removeProject(String pName) {
-		Project project= this.findProject(pName);
+	public void removeProject(int pID) {
+		Project project= this.findProject(pID);
 		if (project != null) {
-			this.ProjectList.remove(project);
-			
-		System.out.println("The Project " + pName + " has been removed");
-			
+			this.projectList.remove(project);
 		}
-		
-		
 				}
+	
+	// remove a project
+	public void removeAProject(int pID) {
+		this.showProjects();
+		this.removeProject(pID);
+		this.showProjects();	
+	}
+	
 	// find method 
-	public Project findProject(String pName) {
-		for (Project project: this.ProjectList) {
-			if(project.getPName().equals(pName)) {
+	public Project findProject(int pID) {
+		for (Project project: this.projectList) {
+			if(project.getPID()==pID) {
 				return project;
 			}
-			
 		}
 	return null;	
 	}		
 	
 	// rename method
-		public void setProjectTitle(String pName, String newName) {
-			Project a = this.findProject(pName);
-
+	public void setProjectTitle(int pID, String newName) {
+			Project a = this.findProject(pID);
 			if (a != null) {
-				a.setName(newName);
-				
-				
+				a.setProjectName(newName);
 			}
 		}
-
-	public void showProjects() {
-		for ( Project project: this.ProjectList) {
-			
-			
-			System.out.println("These are your Projects: " + project);
-		}
-		
-	}
 	
-	public void showTasksFromProject() {
-		Scanner scan = new Scanner(System.in);
+	//change name to a project
+	public void RenameAProject(int pID, String newName) {
 		this.showProjects();
-		
-		System.out.println("Please enter a project ID ");
-		
-		chosenProject = scan.nextLine();
-
-		System.out.println("These are all the tasks in your chosen project: ");
-		this.findProject(chosenProject).getTaskList();
-		
-		scan.close();
+		this.setProjectTitle(pID, newName);		
+		this.showProjects();	
 	}
 	
-	public ArrayList<Project> addNewTask(ArrayList<Project> projectList) {
-		ArrayList<Task>tempTaskList=new ArrayList<Task>();
-
-		Scanner scan = new Scanner (System.in);
+	//show list of projects
+	public void showProjects() {
+//		String toReturn = "";
+		System.out.println("I'm in showProjects before the for");
+		for ( Project project: getProjectList()) {
+			System.out.println("I'm in showProjects inside the for");
+//			System.out.println(aProject.toString());
+//			for(Task i : aProject.getTaskList()) {
+//				toReturn += i.getTaskName() + " " + i.getDueDate();
+//			}
+			}
+	}
+	
+	//show tasks from project 
+	public void showTasksFromProject(int pID) {
 		
-		System.out.println("Please choose a project by ID:  ");
+		this.showProjects();
+//		for (Task task: this.findProject(pID).getTaskList()) {
+//			String t = task.toString();
+//			
+//			System.out.println(t);
+//		}
+//		
+//		System.out.println("");
 		
-		ProjectList.size();
 		
-		chosenProject = scan.nextLine();
+		Project P = this.findProject(pID);
 		
-		findProject(chosenProject);
-			
-			String description;
-			String dueDate;
-			
-			System.out.println("Enter Task");
-			description=scan.nextLine();
-			
-			System.out.println("Enter due Date");
-			dueDate=scan.nextLine();	
-			
-			Task task= new Task(description, dueDate);
-			task.setProject(projectList.get(0));
-			//Project project = new Project();
-			//project.addTask(task);
-		
-			tempTaskList.add(task);
-			//task.toString();
-			projectList.get(0).setTaskList(tempTaskList);
+		if (P != null) {
+			for (Task erikaTask : P.getTaskList()) {
+				int taskID = erikaTask.getTaskID();
+				String taskName = erikaTask.getTaskName();
+				String dueDate = erikaTask.getDueDate();
 				
-		scan.close();
-		return projectList;
-	}
-	
-	public ArrayList<Project> createNewProject() {
-		
-		Scanner scan = new Scanner (System.in);
-		
-		String pName;
-		
-		System.out.println("Enter Project name");
-		pName=scan.nextLine();
-		
-
-		Project project= new Project(pName);
-		this.addProject(project);
-		
-		return this.getProjectList();
-	}
-	
-
-		
-	public void writeToFile() {
-
-		try {
-			FileOutputStream f = new FileOutputStream(new File("MyFile.txt"));
-			ObjectOutputStream o = new ObjectOutputStream(f);
-
-			// write objects to file
-			for (Project aProject : this.getProjectList()) {
-				o.writeObject(aProject);
+				System.out.println("Task ID: " + taskID + " Task name: " + taskName + "Due Date" + dueDate);
 			}
-			o.close();
-			f.close();
+		}
+	
+	}
+	
+	
+	//add new task to a project
+	public void addNewTask(int pID, String description, String dueDate) {
+			Task task = new Task(description, dueDate);
+			this.findProject(pID).addTask(task);
 			
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found");
-		} catch (IOException e) {
-			// System.out.println("Error initializing stream");
-		}
-
 	}
-
-	public void readFromFile() {
-
-		try {
-			FileInputStream fi = new FileInputStream(new File("MyFile.txt"));
-			ObjectInputStream oi = new ObjectInputStream(fi);
-
-			// read objects from file
-			Project p = (Project) oi.readObject();
-
-			while (p != null) {
-				this.addProject(p);
-				p = (Project) oi.readObject();
-			}
-
-			oi.close();
-			fi.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found");
-		} catch (IOException e) {
-			// System.out.println("Error initializing stream");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
+	
+	//delete task from a project using project ID and task ID 
+	public void deleteTaskFromProject(int pID, int taskID) {
+		this.findProject(pID).removeTask(taskID);
 	}
+	
+	//edit a task 
+	public void editATask(int pID, int taskID) {
+	}	
 
-//		public void sortProject() {
-//		Collections.sort(this.getProjectList());
-//	}
-
-	
-	
-	
 	
 }
 
