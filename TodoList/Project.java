@@ -11,6 +11,7 @@ public class Project implements Serializable, Comparable<Project> {
 	private String projectName;
 	private int pID; //id
 	private LocalDate pCreatedAt;
+	private Task task;
 	private static int projectCounter=0;
 	
 	public Project () {
@@ -56,19 +57,19 @@ public class Project implements Serializable, Comparable<Project> {
 		this.pCreatedAt= pCreatedAt;
 		}
 	
-//	public Task getTask() {
-//		return task;
-//	}
-//	
-//	public void setTask(Task task) {
-//		this.task= task;
-//	}
+	public Task getTask() {
+		return task;
+	}
+	
+	public void setTask(Task task) {
+		this.task= task;
+	}
 	
 	// methods: 
 	
 	//add a task
 	public void addTask(Task task) {
-		this.getTaskList().add(task);	
+		getTaskList().add(task);	
 		System.out.println("Task: " + task.getTaskName()+ " Due date: "+ task.getDueDate());
 		System.out.println("\n");
 	}

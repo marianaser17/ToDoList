@@ -13,11 +13,7 @@ public class mainTodo {
 
 		int option1;	
 		
-		Project project = new Project();
-		Task task= new Task ();
 		Controller controller = new Controller();
-		iohandler iohandler= new iohandler();
-		iohandler.readFromFile();
 		
 		while (true) {
 			
@@ -34,7 +30,7 @@ public class mainTodo {
 		
 		option1=scan.nextInt();		
 		scan.nextLine(); //empty \n only after nextInt
-		
+		controller.readFromFile();
 			
 		switch (option1) {
 		
@@ -89,12 +85,12 @@ public class mainTodo {
 				System.out.println("Please choose a project by ID:  ");
 				int pID5= scan.nextInt();
 				scan.nextLine();//empty \n only after nextInt
-				System.out.println(controller.projectReg.findProject(pID5).getTaskList());
+				//System.out.println(controller.projectReg.findProject(pID5).getTaskList());
 				System.out.println("Please enter the task ID of the task you want to edit:   ");
 				int taskID5= scan.nextInt();
 				scan.nextLine();//empty \n only after nextInt
 //				Project project = new Project();
-				project.findTask(taskID5);
+				controller.findTask(taskID5);
 				System.out.println("Enter 1 to rename task ");
 				System.out.println("Enter 2 to change status of the task ");
 				System.out.println("Enter 3 to change the task's due date ");
@@ -103,20 +99,20 @@ public class mainTodo {
 				if ( choice == 1) {
 					System.out.println("Enter the task's new name: ");
 					String newTaskName=scan.nextLine();	
-					project.renameTask(taskID5, newTaskName);
+					controller.newTaskName(taskID5, newTaskName);
 					System.out.println("The name on task " + taskID5 + " has been edited ");
 				}
 				
 				if ( choice == 2) {
 					boolean completed = true;
-					project.changeStatus(taskID5, completed);
+					controller.changeStatus(taskID5, completed);
 					System.out.println("The task " + taskID5 + " is completed " );
 				}
 				
 				if ( choice == 3) {
 					System.out.println("Enter the task's new due date: ");
 					String newDueDate=scan.nextLine();	
-					project.changeDueDate(taskID5, newDueDate);
+					controller.changeDueDate(taskID5, newDueDate);
 					System.out.println("The task's " + taskID5 + " new Due date is: " + newDueDate);
 				}
 				controller.editATask(pID5, taskID5);
@@ -154,7 +150,8 @@ public class mainTodo {
 			//	controller.showTasksFromProject(pID8);
 				System.out.println("These are all the tasks in your chosen project: ");
 				//System.out.println(task.toString());
-				controller.showTasksFromProject(pID8);
+				System.out.println(controller.showTasksFromProject(pID8));
+				System.out.println("\n");
 				System.out.println("\n");
 				break;
 		
@@ -168,7 +165,7 @@ public class mainTodo {
 			System.out.println("Select a valid option"); 
 			
 			}
-		
+		controller.writeToFile();
 			}
 	}
 	

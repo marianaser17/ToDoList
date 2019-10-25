@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class iohandler {
+	
 	public void writeToFile(ProjectReg projectReg) {
 
 		try {
@@ -51,6 +52,7 @@ public class iohandler {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+
 		return projectReg;
 	}
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class ProjectReg {
 	
+	private Project project;
 	private ArrayList<Project> projectList = new ArrayList<>();
 
 	public ProjectReg() {
@@ -25,14 +26,37 @@ public class ProjectReg {
 //	}
 
 	public ArrayList<Project> getProjectList() {
-		System.out.println("I'm inside getProjectList");
+	
 		return projectList;
+	}
+	
+	public Project project() {
+		return project;
+	}
+	public void setProject(Project project) {
+		this.project= project;
 	}
 	
 	public void setProjects(ArrayList<Project> projectList) {
 		this.projectList=projectList;
 	}
 		
+	
+	public void findATask(int taskID) {
+		project.findTask(taskID);
+	}
+	
+	public void renameATask(int taskID,String newTaskName) {
+		project.renameTask(taskID, newTaskName);
+	}
+	public void changeStatus(int taskID, boolean completed) {
+		project.changeStatus(taskID, completed);
+	}
+	public void changeDueDate(int taskID, String newDueDate) {
+		project.changeDueDate(taskID, newDueDate);
+	}
+	
+	
 	//add method
 	public void addProject(Project p) {
 		getProjectList().add(p);
@@ -87,49 +111,20 @@ public class ProjectReg {
 	
 	//show list of projects
 	public void showProjects() {
-//		String toReturn = "";
-		System.out.println("I'm in showProjects before the for");
+		String toReturn = "";
 		for ( Project project: getProjectList()) {
-			System.out.println("I'm in showProjects inside the for");
+			
 //			System.out.println(aProject.toString());
-//			for(Task i : aProject.getTaskList()) {
-//				toReturn += i.getTaskName() + " " + i.getDueDate();
-//			}
+			for(Task i : project.getTaskList()) {
+				toReturn += i.getTaskName() + " " + i.getDueDate();
+			}
 			}
 	}
-	
-	//show tasks from project 
-	public void showTasksFromProject(int pID) {
-		
-		this.showProjects();
-//		for (Task task: this.findProject(pID).getTaskList()) {
-//			String t = task.toString();
-//			
-//			System.out.println(t);
-//		}
-//		
-//		System.out.println("");
-		
-		
-		Project P = this.findProject(pID);
-		
-		if (P != null) {
-			for (Task erikaTask : P.getTaskList()) {
-				int taskID = erikaTask.getTaskID();
-				String taskName = erikaTask.getTaskName();
-				String dueDate = erikaTask.getDueDate();
-				
-				System.out.println("Task ID: " + taskID + " Task name: " + taskName + "Due Date" + dueDate);
-			}
-		}
-	
-	}
-	
 	
 	//add new task to a project
 	public void addNewTask(int pID, String description, String dueDate) {
 			Task task = new Task(description, dueDate);
-			this.findProject(pID).addTask(task);
+			findProject(pID).addTask(task); //CREATE NEW ONE IF IT DOESNT EXIST
 			
 	}
 	
@@ -142,6 +137,16 @@ public class ProjectReg {
 	public void editATask(int pID, int taskID) {
 	}	
 
+	public String toString() {
+		String s = "";
+		for(Project p : projectList) {
+			for(Task t : p.getTaskList())
+				s.concat(t.toString()+"\n");
+		}			System.out.println("WRONG??" + s);
+
+		return s;
+		
+	}
 	
 }
 
